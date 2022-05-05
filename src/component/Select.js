@@ -170,6 +170,8 @@ export default function Select(props) {
       }
     }
     Root.child = temp;
+    console.log(temp);
+    console.log(Root.child.length);
     createslide();
   };
 
@@ -180,6 +182,8 @@ export default function Select(props) {
         temp.push(Root.child[i]);
       }
     }
+    console.log(temp);
+    console.log(Root.child.length);
     Root.child = temp;
   };
 
