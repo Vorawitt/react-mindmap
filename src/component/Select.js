@@ -7,6 +7,7 @@ export default function Select(props) {
   let data = JSON.parse(localStorage.getItem("selectpresent"));
   let Allnode = data.Allnode;
   let Root = data.Root;
+  let Roottemp = { ...Root };
 
   const handleOnChange = (position) => {
     const updatedCheckedState = checkedState.map((item, index) =>
@@ -151,15 +152,15 @@ export default function Select(props) {
 
   const createslide = () => {
     let slide = pres.addSlide();
-    slide.addText(Root.topic, {
+    slide.addText(Roottemp.topic, {
       x: 1.5,
       y: 2.5,
       color: "#363636",
       fill: { color: "F1F1F1" },
       align: pres.AlignH.center,
     });
-    DFS(Root, Allnode);
-    pres.writeFile({ fileName: Root.topic + ".pptx" });
+    DFS(Roottemp, Allnode);
+    pres.writeFile({ fileName: Roottemp.topic + ".pptx" });
   };
 
   const exportsecelcslide = () => {
@@ -169,9 +170,7 @@ export default function Select(props) {
         temp.push(Root.child[i]);
       }
     }
-    Root.child = temp;
-    console.log(temp);
-    console.log(Root.child.length);
+    Roottemp.child = temp;
     createslide();
   };
 
@@ -182,9 +181,10 @@ export default function Select(props) {
         temp.push(Root.child[i]);
       }
     }
-    console.log(temp);
+    Roottemp.child = temp;
     console.log(Root.child.length);
-    Root.child = temp;
+    console.log(Root);
+    console.log(Roottemp);
   };
 
   return (
@@ -221,10 +221,9 @@ export default function Select(props) {
           onClick={() =>
             localStorage.setItem(
               "present",
-              JSON.stringify({ Root: Root, Allnode: Allnode })
+              JSON.stringify({ Root: Roottemp, Allnode: Allnode })
             )
           }
-          state={{ Root: Root, Allnode: Allnode }}
         >
           <button onClick={previewslide}>Preview</button>
         </Link>
