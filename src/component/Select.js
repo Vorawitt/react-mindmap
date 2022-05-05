@@ -32,7 +32,33 @@ export default function Select(props) {
     if (cur.child.length === 0) {
       return;
     } else {
-      let slide = pres.addSlide();
+      pres.defineSlideMaster({
+        title: "PLACEHOLDER_SLIDE",
+        background: { color: "FFFFFF" },
+        objects: [
+          {
+            placeholder: {
+              options: {
+                name: "body",
+                type: "body",
+                x: 1.5,
+                y: 1.0,
+                w: 8,
+                h: 5.25,
+                fontSize: 18,
+                color: "363636",
+                align: pres.AlignH.left,
+                bullet: true,
+                softBreakBefore: true,
+              },
+
+              text: "(custom placeholder text!)",
+            },
+          },
+        ],
+      });
+      
+      let slide = pres.addSlide({ masterName: "PLACEHOLDER_SLIDE" });
       slide.addText(cur.topic, {
         x: 1.5,
         y: 0.5,
@@ -52,7 +78,7 @@ export default function Select(props) {
             if (Allnode[j].topic.length > 800) {
               text.push(Allnode[j].topic.replaceAll("\n", "").substring(800));
               // create another slide to add text
-              let subslide = pres.addSlide();
+              let subslide = pres.addSlide({ masterName: "PLACEHOLDER_SLIDE" });
               subslide.addText(cur.topic + "(ต่อ)", {
                 x: 1.5,
                 y: 0.5,
@@ -61,13 +87,7 @@ export default function Select(props) {
                 color: "363636",
                 align: pres.AlignH.top,
               });
-              subslide.addText(text.toString().replaceAll(",", "\n"), {
-                x: 1.5,
-                y: 2.5,
-                color: "363636",
-                align: pres.AlignH.left,
-                softBreakBefore: true,
-              });
+              subslide.addText(text.toString().replaceAll(",", "\n"),{ placeholder: "body" });
 
               text = [];
               text.push(
@@ -88,41 +108,9 @@ export default function Select(props) {
           .slice(0, 9)
           .toString()
           .replaceAll(",", "\n"),
-        {
-          x: 1.5,
-          y: 2.5,
-          color: "363636",
-          align: pres.AlignH.left,
-          bullet: true,
-          softBreakBefore: true,
-        }
+          { placeholder: "body" },
       );
       //create another slide to add text when have more then 9 topic
-      pres.defineSlideMaster({
-        title: "PLACEHOLDER_SLIDE",
-        background: { color: "FFFFFF" },
-        objects: [
-          {
-            placeholder: {
-              options: {
-                name: "body",
-                type: "body",
-                x: 1.5,
-                y: 1.0,
-                w: 12,
-                h: 5.25,
-                fontSize: 18,
-                color: "363636",
-                align: pres.AlignH.left,
-                bullet: true,
-                softBreakBefore: true,
-              },
-
-              text: "(custom placeholder text!)",
-            },
-          },
-        ],
-      });
       if (text.length > 9) {
         let subslide = pres.addSlide({ masterName: "PLACEHOLDER_SLIDE" });
         subslide.addText(cur.topic + "(ต่อ)", {
