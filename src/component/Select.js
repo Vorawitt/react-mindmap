@@ -1,6 +1,7 @@
 import pptxgen from "pptxgenjs";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import "./styles.css"
 
 export default function Select(props) {
   let pres = new pptxgen();
@@ -176,15 +177,16 @@ export default function Select(props) {
   };
 
   return (
-    <div>
+    <div className="Select">
       <h1>Select export slide</h1>
       <h2>{Root.topic}</h2>
-      <ul className="slide-list">
+      <ul className="selection-list">
         {checklist.map((topic, index) => {
           return (
             <li key={index}>
-              <div className="toppings-list-item">
-                <div className="left-section">
+              <div className="selection-list-item">
+              <label htmlFor={`custom-checkbox-${index}`}>{index+1}. {topic}</label>
+                <div>
                   <input
                     type="checkbox"
                     id={`custom-checkbox-${index}`}
@@ -193,15 +195,14 @@ export default function Select(props) {
                     checked={checkedState[index]}
                     onChange={() => handleOnChange(index)}
                   />
-                  <label htmlFor={`custom-checkbox-${index}`}>{topic}</label>
                 </div>
               </div>
             </li>
           );
         })}
       </ul>
-      <div>
-        <button onClick={exportsecelcslide}>Export</button>
+      <div class="center">
+        <button class="button" onClick={exportsecelcslide}>Export</button>
         <Link
           to="/present"
           target="_blank"
@@ -213,7 +214,7 @@ export default function Select(props) {
             )
           }
         >
-          <button onClick={previewslide}>Preview</button>
+          <button class="button" onClick={previewslide}>Preview</button>
         </Link>
       </div>
     </div>
